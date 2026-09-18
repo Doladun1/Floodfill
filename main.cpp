@@ -1,8 +1,12 @@
+#include <utility>
+#include <iostream>
+#include <fstream>
+
 enum Heading{
-    north=1;    
-    east=2;
-    south=4;
-    west=8;
+    north=0;    
+    east=1;
+    south=2;
+    west=3;
 }
 
 //Create brain class
@@ -29,15 +33,35 @@ class Brain{
 
 
 */
-int Brain::solve_maze(cell* input){
+std::pair<int,int> Brain::solve_maze(cell* input,Heading heading, Heading last_heading, _Bool chng_dir){
+    std::pair<int,int> res;
 
-
-    if(input == NULL) return 0;
-    else if( !(heading & input) ) {x_pos++;y_pos++;solve_maze(input++);} //update pos and move to next cell
-    else{
-        heading>>1
+    if(input == NULL) 
+        return {0,0};
+    else if( !(1>>heading & input) && ( (heading^last_heading) != 2) ) {
+        x_pos++;y_pos++;
+        res = solve_maze(input++,heading,heading,0,res+1);
+    } //update pos and move to next cell
+    
+    else if( (heading == last_heading) && chng_dir )
+        return res; //backtrack
+    
+    else {   
+        res = solve_maze(input,heading++,last_heading,1);//try next direction      
     }
 
+    if ( res.first ){
+            //undo pos change subtract res by 1 <- yes
+            if (heading == last_heading)
+                return {res.first--,res.second};
+            return res;//until last_heading != heading comp
+            //return res until we reach first wall pos
+    }
+    else if ( res.second ){
+        res = solve_maze(input,heading++,last_heading,1);
+    }
+
+    return 0;
 }
 
 //add members
