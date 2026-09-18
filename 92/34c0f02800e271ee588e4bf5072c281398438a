@@ -1,0 +1,19 @@
+Makefile
+  h_23cbc34d6c3711 1-18
+Maze.h
+  h_23cbc34d6c3711 1-34
+main.cpp
+  h_23cbc34d6c3711 4,9,13-14,17,20-22,24-26,29-34,36-54,56-57,60-66
+  h_23cbc34d6c3711 5,58
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "9234c0f02800e271ee588e4bf5072c281398438a",
+  "prompts": {},
+  "humans": {
+    "h_23cbc34d6c3711": {
+      "author": "David O <doladun98@gmail.com>"
+    }
+  }
+}
