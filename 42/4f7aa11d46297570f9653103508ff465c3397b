@@ -1,0 +1,14 @@
+main.cpp
+  h_23cbc34d6c3711 1-4,6-9,36-37,39-51,53-61,64
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "424f7aa11d46297570f9653103508ff465c3397b",
+  "prompts": {},
+  "humans": {
+    "h_23cbc34d6c3711": {
+      "author": "David O <doladun98@gmail.com>"
+    }
+  }
+}
