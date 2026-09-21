@@ -1,4 +1,4 @@
-Dynamic Maze Solver with Recursive Exploration:
+# Dynamic Maze Solver with Recursive Exploration:
 Built a recursive, object oriented maze solving system that constructs and updates an internal map dynamically as new input is received.
 The program locates the exit using recursive exploration, then re solves the maze with a BFS shortest path algorithm for optimal navigation.
 A real time GUI visualizes the solving process, and the architecture can be adapted for deployment on a physical rover. 
