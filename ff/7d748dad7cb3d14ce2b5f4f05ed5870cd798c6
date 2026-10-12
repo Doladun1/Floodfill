@@ -1,0 +1,12 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ff7d748dad7cb3d14ce2b5f4f05ed5870cd798c6",
+  "prompts": {},
+  "humans": {
+    "h_23cbc34d6c3711": {
+      "author": "David O <doladun98@gmail.com>"
+    }
+  }
+}
