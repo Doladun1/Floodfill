@@ -1,0 +1,25 @@
+main.py
+  h_23cbc34d6c3711 1-165
+maze.h
+  h_23cbc34d6c3711 1-64
+main.cpp
+  h_23cbc34d6c3711 5-6,8-9,20-42,45-55
+  h_23cbc34d6c3711 11
+export.h
+  h_23cbc34d6c3711 1-32
+maze.cpp
+  h_23cbc34d6c3711 1-101
+Makefile
+  h_23cbc34d6c3711 4-5,7-8,12-14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8535fd103f056e25827fa160b1b9cdb6acf1b18a",
+  "prompts": {},
+  "humans": {
+    "h_23cbc34d6c3711": {
+      "author": "David O <doladun98@gmail.com>"
+    }
+  }
+}
