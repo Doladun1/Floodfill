@@ -1,22 +1,11 @@
 #include "maze.h"
+#include "print.h"
 
-const char* toString(Direction direction) {
+const char* toString(int direction) {
     switch (direction) {
-        case Direction::north:   return "north";
-        case Direction::south: return "south";
-        case Direction::east:  return "east";
-        case Direction::west: return "west";
-
-        default: return "Unknown";
-    }
-    return "Unknown";
-}
-
-const char* toStringInt(int direction) {
-    switch (direction) {
-        case 0:   return "north";
+        case 0: return "north";
         case 1: return "east";
-        case 2:  return "south";
+        case 2: return "south";
         case 3: return "west";
 
         default: return "Unknown";
@@ -24,78 +13,74 @@ const char* toStringInt(int direction) {
     return "Unknown";
 }
 
-#if NO_VEC
-int Brain::solve_maze(int* cell,Direction curr_dir, int count,int width){
-    if(cell == NULL) return 0;
-    if(!*cell) return 0;
-    int res =1;
-    int next_cell = 0;
-    int x=1,y=-width;
-    //if (count == 10 ) return 0;
-    cout << "Checking Cell:" << count << " - " << *cell << endl;
+bool Brain::isThereAWall(int dir, int cell){
+    return ((1<< dir) & cell) ? 1 : 0;
+}
 
-    Direction directions[] = {
-        Direction::north,        Direction::east,
-        Direction::south,        Direction::west
-    };
-       // return 0;
-    for(Direction new_dir : directions){
-        if ( !(1<< (static_cast<int>(new_dir)) & *cell) 
-            && ( (static_cast<int>(new_dir)^static_cast<int>(curr_dir)) != 2) ){
-               /**/ cout << " Going: " << toString(new_dir) << endl;
-              /**/  cout << " for:" <<  *cell << endl;
-              /**/  cout << " From: " << toString(curr_dir) << endl;
-                next_cell = (static_cast<int>(new_dir)%2) ? x : y;
-                next_cell = (static_cast<int>(new_dir)>1) ? -next_cell : next_cell;
-                    cout << "Next up: " << next_cell << endl;
-                //if (visited_cells.find(*cell+next_cell) != visited_cells.end() ){
-                //    cout << "Loop Found holy shit" << endl;
-                //    return 1;
-                //}
-                visited_cells.insert(*cell+next_cell);
-                res = solve_maze( (cell+next_cell) ,new_dir,++count, width);
-            }
+bool Brain::isOppositeDir(int a, int b){
+
+    return ( b < 5 ? (a ^ b) == 2 : 0 );
+}
+
+int Brain::next_cell(int dir,int width){
+    int buf;
+    buf = (dir%2) ? 1 : -width;
+    buf = (dir>1) ? -buf : buf;
+
+    return buf;
+}
+
+int Brain::solve_maze(int*head, int* cell, int width, int curr_dir){
+    if(!*cell) return 0;
+
+    int res =1;
+    int n_cell = 0;
+
+    print("Checking Cell: [", (cell-head)/width,"][", (cell-head)%width,"]");
+    print(cell-head,width);
+
+    for(int new_dir = 0; new_dir < 4; ++new_dir){
+        if ( !isThereAWall(new_dir,*cell) && 
+             !isOppositeDir(new_dir,curr_dir) ) {
+
+            print("Going", toString(new_dir));
+
+            n_cell = next_cell(new_dir,width);
             
+            //check if already visited then add to visited 
+            //then go to next cell
+            if (visited_cells.find(cell - head + n_cell) != visited_cells.end() ){
+                print("Loop Found SHITT");
+                visited_cells.erase(cell - head);
+                return 1;
+            }
+
+            visited_cells.insert( cell - head );
+            res = solve_maze(head, (cell+n_cell), width, new_dir);
+            }
+
         if(!res) {
-            shortest_path.push_back(static_cast<int>(new_dir));
+            shortest_path.push_back(new_dir);
             return 0;
         }
     }
-    // Add loop detector
-    cout<< "Dead End Found Returning..." << endl;
+    visited_cells.erase(cell - head);
+    print("Dead End Found Returning...");
     return 1;
 }
-#else
-int Brain::solve_maze(vector<int> map, int index, Direction curr_dir, int count,int width){
-    if(map[index] == NULL) return 0;
-    if(!*cell) return 0;
-    int res =1;
-    int next_cell = 0;
-    int x=1,y=width;
-    //if (count == 10 ) return 0;
-    cout << "Checking Cell:" << count << " - " << *cell << endl;
 
-    Direction directions[] = {
-        Direction::north,
-        Direction::east,
-        Direction::south,
-        Direction::west
-    };
-       // return 0;
-    for(Direction new_dir : directions){
-        if ( !(1<< (static_cast<int>(new_dir)) & *cell) 
-            && ( (static_cast<int>(new_dir)^static_cast<int>(curr_dir)) != 2) ){
-                cout << " Going: " << toString(new_dir) << endl;
-                cout << " for:" <<  *cell << endl;
-                cout << " From: " << toString(curr_dir) << endl;
-                next_cell = (static_cast<int>(new_dir)%2) ? x : y;
-                next_cell = (static_cast<int>(new_dir)>1) ? -next_cell : next_cell;
-                res = solve_maze( (cell+next_cell) ,new_dir,++count, width);
-            }
-            
-        if(!res) return 0;
-    }
-    cout<< "Dead End Found Returning..." << endl;
-    return 1;
+vector<int> Brain::solve_shortest_path(int* cell,int width, int* head){
+    print("Solving...", *cell);
+    vector<int> out;
+    for(auto item = shortest_path.rbegin();
+        item != shortest_path.rend(); item++ ){
+        
+        out.push_back(cell-head);
+        print("Current Cell:", *cell, "Going:", toString(*item));
+        
+        cell = cell + next_cell(*item,width);
+    } 
+    out.push_back(cell-head);
+    return out;   
 }
-#endif
+

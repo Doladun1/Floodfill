@@ -8,10 +8,9 @@
 
 using std::ofstream;
 using std::endl;
+using std::fstream;
 
 void export_map_to_csv(std::vector<int>& map, int width){
-
-    //cout << map.size();
 
     std::fstream file("Test.csv", std::ios::out);
 
@@ -26,7 +25,12 @@ void export_map_to_csv(std::vector<int>& map, int width){
             count++;
         }
     }
-    
-    
+}
 
+void export_path(std::vector<int> path, int width){
+    fstream file("path.txt", std::ios::out);
+
+    for(std::size_t i =0; i < path.size(); ++i){
+        file << path[i]/width << "," << path[i]%width << endl;
+    }
 }

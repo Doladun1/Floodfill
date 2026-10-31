@@ -1,6 +1,6 @@
 #ifndef MAZE_H
 #define MAZE_H
-#define NO_VEC 1
+
 
 #include <iostream>
 #include <string>
@@ -13,41 +13,28 @@ using std::vector;
 using std::unordered_set;
 
 
-
 using std::cout;
 using std::endl;
 
-enum class Direction{
-    north=0,    
-    east=1,
-    south=2,
-    west=3,
-    max=4
-};
 
-const char* toString(Direction direction) ;
-const char* toStringInt(int direction) ;
-
-typedef struct cell{
-    bool top,bottom,left,right;
-}cell;
-
+//const char* toString(Direction direction) ;
+const char* toString(int direction) ;
 
 //Create brain class
 class Brain{
     public:
     int x_pos;
     int y_pos;
-    Direction dir;
     std::unordered_set<int> visited_cells;
     vector<int> shortest_path;
-    #if NO_VEC
-    int solve_maze(int* cell, Direction curr_dir, int count, int width);
-    #else
-    int solve_maze(vector<int> map,int index, Direction curr_dir, int count,int width);
-    #endif
-    void update_map(int wall_select, int x_index, int y_index);
 
+    int solve_maze(int* head, int* cell, int width, int curr_dir = 5);/**/
+    vector<int> solve_shortest_path(int* cell,int width, int* head);
+    bool isThereAWall(int dir, int cell);
+    bool isOppositeDir(int a, int b);
+
+    void update_map(int wall_select, int x_index, int y_index);
+    int next_cell(int dir,int width);
 };
 
 /*solve maze - Recursively solve maze
@@ -61,4 +48,4 @@ class Brain{
 
 */
 
-#endif
+#endif //MAZE_H

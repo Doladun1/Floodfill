@@ -70,16 +70,23 @@ Or generate maze based on instructions???
     Add 
 """
 import csv
+import time
 
-f = open("/home/davae/Floodfill/Test.csv", newline="") 
+f = open("Test.csv", newline="") 
 
 matrix = []
 for row in csv.reader(f):
     numbers = [int(value) for value in row]
     matrix.append(numbers) 
 
-for row in matrix:
-    print(row)
+f = open("path.txt", newline="")
+path = []
+for row in csv.reader(f):
+    numbers = [int(value) for value in row]
+    path.append(numbers)
+print(path)
+#for row in matrix:
+#    print(row)
 
 #Convert matrix to maze format 
 maze = []#[[] for _ in range(len(matrix))]
@@ -90,8 +97,8 @@ for r,row in enumerate(matrix):
         n,e,s,w = col&1,col&2,col&4,col&8
         maze[r].append({"north": n, "east": e, "south": s, "west": w})
 
-for row in maze:
-    print(row)
+#for row in maze:
+#    print(row)
 
 #maze.reverse()
 
@@ -156,10 +163,39 @@ def draw_maze():
                     fill="black",
                     width=WALL_WIDTH
                 )
-
+def add_rectangle():
+    canvas.create_rectangle(path[0][1]*CELL_SIZE,
+                    path[0][0]*CELL_SIZE,
+                    path[0][1]*CELL_SIZE+CELL_SIZE,
+                    path[0][0]*CELL_SIZE+CELL_SIZE,
+                    fill="red",stipple="gray75")
+def add_more():
+    for entry in path[1:]:
+        canvas.create_rectangle(entry[1]*CELL_SIZE,
+                                entry[0]*CELL_SIZE,
+                                entry[1]*CELL_SIZE+CELL_SIZE,
+                                entry[0]*CELL_SIZE+CELL_SIZE,
+                                fill="green",stipple="gray50")
+        
 
 draw_maze()
+root.after(2000, add_rectangle)
+root.after(3500, add_more)
+
 root.mainloop()
+"""
+canvas.create_rectangle(path[0][1]*CELL_SIZE,
+                    path[0][0]*CELL_SIZE,
+                    path[0][1]*CELL_SIZE+CELL_SIZE,
+                    path[0][0]*CELL_SIZE+CELL_SIZE,
+                    fill="red",stipple="gray75");
+
+for entry in path[1:]:
+    canvas.create_rectangle(entry[1]*CELL_SIZE,
+                            entry[0]*CELL_SIZE,
+                            entry[1]*CELL_SIZE+CELL_SIZE,
+                            entry[0]*CELL_SIZE+CELL_SIZE,
+                            fill="green",stipple="gray50");"""
 
 
 

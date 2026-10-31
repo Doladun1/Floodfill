@@ -1,13 +1,13 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra
+CXXFLAGS = -std=c++20 -Wall -Wextra
 
 CPPFLAGS := -MMD -MP 
 
 TARGET = app
 SOURCE = main.cpp maze.cpp
-DEPS = maze.h export.h
+DEPS = maze.h export.h print.h
 
-all: build run
+all: build run gui
 
 build: $(TARGET)
 $(TARGET): $(SOURCE) $(DEPS)
@@ -18,4 +18,7 @@ clean:
 
 run: $(TARGET)
 	./$(TARGET)
+
+gui:	
+	python3 main.py
 
