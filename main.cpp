@@ -1,32 +1,44 @@
 #include <utility>
 #include <fstream>
 
-#include "print.h"
+#include "common.h"
 #include "maze.h"
 #include "export.h"
 
 
 
-int main(){
-    Brain brain; 
+int main(){ 
 
-    const int sel = 1;
+    const int sel = 2;
     int* map = mazes[sel].data();
     int width = sizes[sel];
-    int res;
-    vector<int> out;
-
-    export_map_to_csv(mazes[sel],width); 
-
     int row,col,*starting_point;
-    row = 4;col = 4;
+    vector< vector< int > > out_map;
+    vector< vector< int > > out_path;
+
+    row = 3;col = 0;
     starting_point = map + row*width + col;
 
-    res = brain.solve_maze(map, starting_point, width);    
-    out = brain.solve_shortest_path(starting_point, width, map);
+    
+
+    Brain brain(width,map,starting_point); 
+
+    brain();    
+
+    brain.solve_maze(starting_point);   
+
+    brain();
+
+    brain.export_map(out_map);
+    export_map_to_csv(mazes[sel],width); 
+    export_FFmap_to_csv(out_map,width); 
+
+    brain.export_path(out_path);
+    exportFF_path(out_path);
+    /* out = brain.solve_shortest_path(starting_point, width);
 
     export_path(out,width);
-    print("Tostado is",res);
+    print("Tostado is",res); */
 
     return 0;
 }

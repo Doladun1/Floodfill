@@ -79,7 +79,14 @@ for row in csv.reader(f):
     numbers = [int(value) for value in row]
     matrix.append(numbers) 
 
-f = open("path.txt", newline="")
+f = open("Test2.csv", newline="") 
+
+matrix2 = []
+for row in csv.reader(f):
+    numbers = [int(value) for value in row]
+    matrix2.append(numbers) 
+
+f = open("path2.txt", newline="")
 path = []
 for row in csv.reader(f):
     numbers = [int(value) for value in row]
@@ -117,8 +124,8 @@ root.title("Maze Viewer")
 
 canvas = tk.Canvas(
     root,
-    width=columns * CELL_SIZE,
-    height=rows * CELL_SIZE,
+    width=(columns+2) * CELL_SIZE,
+    height=(rows+2) * CELL_SIZE,
     background="white"
 )
 canvas.pack()
@@ -131,10 +138,18 @@ def draw_maze():
         for column in range(columns):
             cell = maze[row][column]
 
-            x1 = column * CELL_SIZE
-            y1 = row * CELL_SIZE
+            x1 = (column+1) * CELL_SIZE
+            y1 = (row+1) * CELL_SIZE
             x2 = x1 + CELL_SIZE
             y2 = y1 + CELL_SIZE
+
+            canvas.create_text(
+                x1+CELL_SIZE/2,
+                y1+CELL_SIZE/2,
+                text=matrix2[row][column],
+                font= ("Calibri",30) ,
+                fill="black" if matrix2[row][column] else "green"
+                )
 
             if cell["north"]:
                 canvas.create_line(
@@ -164,17 +179,17 @@ def draw_maze():
                     width=WALL_WIDTH
                 )
 def add_rectangle():
-    canvas.create_rectangle(path[0][1]*CELL_SIZE,
-                    path[0][0]*CELL_SIZE,
-                    path[0][1]*CELL_SIZE+CELL_SIZE,
-                    path[0][0]*CELL_SIZE+CELL_SIZE,
+    canvas.create_rectangle((path[0][1]+1)*CELL_SIZE,
+                    (path[0][0]+1)*CELL_SIZE,
+                    (path[0][1]+1)*CELL_SIZE+CELL_SIZE,
+                    (path[0][0]+1)*CELL_SIZE+CELL_SIZE,
                     fill="red",stipple="gray75")
 def add_more():
     for entry in path[1:]:
-        canvas.create_rectangle(entry[1]*CELL_SIZE,
-                                entry[0]*CELL_SIZE,
-                                entry[1]*CELL_SIZE+CELL_SIZE,
-                                entry[0]*CELL_SIZE+CELL_SIZE,
+        canvas.create_rectangle((entry[1]+1)*CELL_SIZE,
+                                (entry[0]+1)*CELL_SIZE,
+                                (entry[1]+1)*CELL_SIZE+CELL_SIZE,
+                                (entry[0]+1)*CELL_SIZE+CELL_SIZE,
                                 fill="green",stipple="gray50")
         
 

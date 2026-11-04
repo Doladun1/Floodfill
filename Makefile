@@ -5,7 +5,7 @@ CPPFLAGS := -MMD -MP
 
 TARGET = app
 SOURCE = main.cpp maze.cpp
-DEPS = maze.h export.h print.h
+DEPS = maze.h export.h common.h
 
 all: build run gui
 

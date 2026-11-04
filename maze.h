@@ -22,19 +22,39 @@ const char* toString(int direction) ;
 
 //Create brain class
 class Brain{
-    public:
-    int x_pos;
-    int y_pos;
-    std::unordered_set<int> visited_cells;
-    vector<int> shortest_path;
 
-    int solve_maze(int* head, int* cell, int width, int curr_dir = 5);/**/
-    vector<int> solve_shortest_path(int* cell,int width, int* head);
+    public:
+    Brain(int width,int* head,int* starting_point);
+    void initialize_map(int width);
+
+    void operator()();
+
     bool isThereAWall(int dir, int cell);
     bool isOppositeDir(int a, int b);
+    
+    int solve_maze(int* cell);/**/
+    int next_step(int* cell, int last_dir = 5);/**/
 
-    void update_map(int wall_select, int x_index, int y_index);
-    int next_cell(int dir,int width);
+    void export_map(vector< vector<int> >& des);
+    void print_map();
+
+    void update_path();
+    void export_path(vector<vector<int> >& des);
+
+    int next_cell(int dir, int width);
+    int next_cell_x(int dir);
+    int next_cell_y(int dir);
+
+    private:
+    int x_pos;
+    int y_pos;
+    int* head;
+    int width;
+
+    vector< vector<int> > map;    
+    vector< vector<int> > path;
+    vector<int> shortest_path;
+    
 };
 
 /*solve maze - Recursively solve maze
