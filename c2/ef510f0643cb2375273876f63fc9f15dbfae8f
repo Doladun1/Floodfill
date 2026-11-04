@@ -1,0 +1,29 @@
+common.h
+  h_23cbc34d6c3711 1-2,32-51,136-137,153
+maze.cpp
+  h_23cbc34d6c3711 2,33-65,67-73,75-83,85-90,92,96-128,130-153,155-166,169-188,191-192,195-205
+  h_23cbc34d6c3711 91,93-95,129
+export.h
+  h_23cbc34d6c3711 30-44,51-58
+main.cpp
+  h_23cbc34d6c3711 4,12,16-19,22-26,29-38,41
+  h_23cbc34d6c3711 10,27-28
+Makefile
+  h_23cbc34d6c3711 8
+main.py
+  h_23cbc34d6c3711 82-89,127-128,141-142,146-153,182-185,189-192
+maze.h
+  h_23cbc34d6c3711 25,27-30,34-36,38-39,41-55,57
+  h_23cbc34d6c3711 37,56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c2ef510f0643cb2375273876f63fc9f15dbfae8f",
+  "prompts": {},
+  "humans": {
+    "h_23cbc34d6c3711": {
+      "author": "David O <doladun98@gmail.com>"
+    }
+  }
+}
